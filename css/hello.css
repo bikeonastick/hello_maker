@@ -1,0 +1,12 @@
+.tag {
+  height: 200px;
+  background-image: url("../images/hello_my_name_is.png");
+  background-size: 200px 143px;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: "courier",monospace;
+}
+.tag h1 {
+  padding-top: 100px;
+  text-align: center;
+}
