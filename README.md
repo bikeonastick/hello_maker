@@ -401,6 +401,38 @@ difficult to add to your project, so keep following this!
    
    the `test/jasmine` directory should contain the jasmine source code
 
+1. Create a test Runner HTML file to execute your Jasmine tests. This file 
+   brings together the jasmine libraries for running your tests, all of 
+   your source files and all of your tests (specs). Create 
+   `test/jasmine/SpecRunner.html` and add the following content:
+
+   ```
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Jasmine Spec Runner v2.4.0</title>
+      <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.4.0/jasmine_favicon.png">
+      <link rel="stylesheet" href="lib/jasmine-2.4.0/jasmine.css">
+      <script src="lib/jasmine-2.4.0/jasmine.js"></script>
+      <script src="lib/jasmine-2.4.0/jasmine-html.js"></script>
+      <script src="lib/jasmine-2.4.0/boot.js"></script>
+    
+      <!-- include source files here... -->
+      <script src="../../js/names.js"></script>
+    
+      <!-- include spec files here... -->
+      <script src="spec/names_spec.js"></script>
+    
+    </head>
+    
+    <body>
+    </body>
+    </html>
+   ```
+   
+   We are going to test our js/names.js javascript file 
+
 
 
 
