@@ -260,7 +260,9 @@ with CSS.
 
    Reload hello.html in your browser and.... *hey what's going on?* I 
    suspect you can't see your image anymore. That's because I oversimplified
-   my earlier instructions. Instead of just giving you the answer, let's head
+   my earlier instructions. 
+
+1. Instead of just giving you the answer, let's head
    back to the console in the Developer tools:
    
    ![the css error in the console](doc/hello-error-css.png)
@@ -271,7 +273,7 @@ with CSS.
    structure. You should have your images directory as a sibling to your css
    directory. 
    
-   The image reference in the style info for the `tag` class is different 
+1. The image reference in the style info for the `tag` class is different 
    based on where it is used. Since it was originally 
    written in hello.html, the path to hello_my_name_is.png is relative to the
    html page `background-image: url("images/hello_my_name_is.png");` however,
