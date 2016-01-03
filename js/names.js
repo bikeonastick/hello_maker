@@ -11,7 +11,6 @@ function nameThem(nameVals) {
   for ( var count = 0; count < names.length; count++ ) {
     var nameVal = names[count].trim();
     var helloDiv = document.createElement("div");
-    helloDiv.setAttribute("id","tag" + count);
     helloDiv.setAttribute("class", "tag");
 
     var h1 = document.createElement("h1");

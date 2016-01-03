@@ -621,4 +621,44 @@ described. Some people would say the behavior of your code, but, in reality, if
 you write poor or inaccurate descriptions, they won't know what it's really 
 doing. 
 
+## Step 9 - Getting more complex
 
+```
+<html>
+  <head>
+    <title>hello all</title>
+    <link rel="stylesheet" type="text/css" href="css/hello.css"/>
+    <script src="js/names.js"> </script>
+  </head>
+  <body> 
+    <form>
+      <label for="helloname">What Names?</label>
+      <input type="text" name="helloname" id="name" />
+      <input type="button" onclick="nameThem(this.form.helloname.value)" value="say hellos"/>
+    </form>
+    <div id="more_tags"></div>
+  </body>
+</html>
+```
+
+```
+
+function nameThem(nameVals) {
+  var names = nameVals.split(',');
+  var theNode = document.getElementById("more_tags");
+  for ( var count = 0; count < names.length; count++ ) {
+    var nameVal = names[count].trim();
+    var helloDiv = document.createElement("div");
+    helloDiv.setAttribute("class", "tag");
+
+    var h1 = document.createElement("h1");
+    var namedH1 = document.createTextNode(nameVal);
+    h1.appendChild(namedH1);
+    helloDiv.appendChild(h1);
+
+    theNode.appendChild(helloDiv);
+  }
+  return true;
+}
+
+```
