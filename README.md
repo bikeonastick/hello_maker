@@ -394,8 +394,12 @@ difficult to add to your project, so keep following this!
    to use it. I have included a copy of Jasmine's source. If you are starting
    a new project, download a new copy. To add a jasmine test, create the 
    `spec` directory under the `test/jasmine` directory, e.g., from the top of 
-   the project directory, `mkdir test/jasmine/spec` the `test/jasmine` directory
-   should contain the jasmine source code
+   the project directory, 
+   ```
+   mkdir test/jasmine/spec
+   ``` 
+   
+   the `test/jasmine` directory should contain the jasmine source code
 
 
 
