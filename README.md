@@ -518,7 +518,16 @@ you want to do true BDD on browser-based projects, look into driving
 [Mocha](https://mochajs.org/) with the excellent 
 [chai JavaScript assertions](http://chaijs.com/) to drive your browser through 
 Selenium. The deal is, if you're not testing it the way your user experiences it, 
-you're not testing behavior.) 
+you're not testing behavior.) I'm not just picking on BDD here, it's really just
+funny how people will latch on to a name for something even if they aren't doing
+it. Some people use well-known unit testing frameworks to drive behavioral or 
+integration tests and they call them unit tests, despite needing a huge 
+dependency chain configured and running just to support the tests. 
+
+The point is, you are testing what you are testing, and testing is a good thing, 
+so don't get caught up in the name of your tooling. You chose the tooling, 
+hopefully, because it makes you productive and not because of an industry 
+buzzword. 
 
 Anyway, enough controversial topics for the day. Let's deconstruct the Jasmine 
 code so you can benefit from what we've done here.
@@ -588,10 +597,10 @@ Now on to the actual test.
 
 We call the `it` method. Yeah... `it`. Seems weird, but stick with me. Remember,
 we are in a `describe` method for something we called "names" and we are going 
-to call `it` and supply that with a descriptive phrase. Try to read it all as a
-sentence. Describe "names" it "should set the nametag_text node's econtent".
+to call `it` and supply that with a descriptive phrase. Try to read this as a
+sentence. Describe "names" it "should set the nametag_text node's content".
 See? Then in that test (encapsulated in a JavaScript function) we set the 
-variable `testVal`, pass it to our nameIt function as an argument then we 
+variable `testVal`, pass it to our nameIt function as an argument, and we 
 describe our expectation:
 
 ```
