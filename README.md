@@ -63,6 +63,7 @@ HTML page. A `div` tag is the best way to do this. We will style that div tag
 with CSS.
 
 1. Open hello.html in a text editor:
+
    ```
    <html>
      <head>
@@ -73,6 +74,7 @@ with CSS.
      </body>
    </html>
    ```
+
    ![basic image reference](doc/hello1.png)
 
 ## Step 2 - Making our image writeable.
