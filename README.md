@@ -340,6 +340,32 @@ with CSS.
    did before. You, now, have a well separated project and things are 
    starting to look kind of professional!
 
+# Advanced Topics 
+
+You understand a lot about the structure of an HTML project, but there are a 
+few more things to understand that will be helpful:
+
+* Testing
+* Evolving the example
+* Deployment
+
+I will introduce you to testing and we will add a slightly more sophisticated
+version of our lession. 
+
+However, I am not going to walk you through deployment 
+as an example. Deployment will depend upon your hosting situation. You will 
+want to understand tools like scp, rcp, sftp, oh my! You'll need to pre-process 
+your javascript files (uglify, minify) for production. Then, you only want to 
+put the files needed for the website into production, so you want to avoid 
+deploying your tests and any documentation to the production site. 
+
+As well, once you've decided how you'll deploy, there are a number of tools
+and scripting languages to automate deployment. One of the best tools for 
+automating the processing and deployment of static websites is 
+[gulp](http://gulpjs.com/). 
+
+Anyway... on to testing and the next steps of the example!
+
 ## Step 8 - Testing your JavaScript
 
 Ahh, testing. This is super important when a project lives over a long
@@ -364,9 +390,12 @@ What I want you to understand is that _tests are important_ and not very
 difficult to add to your project, so keep following this!
 
 1. If you've brought this down locally using git, you've had a 
-   directory named `test` in your source tree the whole time. Now wer're going
+   directory named `test` in your source tree the whole time. Now we're going
    to use it. I have included a copy of Jasmine's source. If you are starting
-   a new project, download a new copy.
+   a new project, download a new copy. To add a jasmine test, create the 
+   `spec` directory under the `test/jasmine` directory, e.g., from the top of 
+   the project directory, `mkdir test/jasmine/spec` the `test/jasmine` directory
+   should contain the jasmine source code
 
 
 
