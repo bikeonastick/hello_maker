@@ -623,42 +623,275 @@ doing.
 
 ## Step 9 - Getting more complex
 
-```
-<html>
-  <head>
-    <title>hello all</title>
-    <link rel="stylesheet" type="text/css" href="css/hello.css"/>
-    <script src="js/names.js"> </script>
-  </head>
-  <body> 
-    <form>
-      <label for="helloname">What Names?</label>
-      <input type="text" name="helloname" id="name" />
-      <input type="button" onclick="nameThem(this.form.helloname.value)" value="say hellos"/>
-    </form>
-    <div id="more_tags"></div>
-  </body>
-</html>
-```
+Let's look at how we could write multiple nametags. We'll use the same form and
+if you enter multiple names separated by commas, we'll create a nametag for each
+one. 
 
-```
+Notice, we'll use the same names.js file and the same hello.css. This time, 
+though, we will start with a blank-ish looking page. The other behavioral thing 
+to note is that our form will append nametags to the `more_tags` div each time 
+it's run until the page is refreshed. We'll write tests that express that 
+intent, as well.
 
-function nameThem(nameVals) {
-  var names = nameVals.split(',');
-  var theNode = document.getElementById("more_tags");
-  for ( var count = 0; count < names.length; count++ ) {
-    var nameVal = names[count].trim();
-    var helloDiv = document.createElement("div");
-    helloDiv.setAttribute("class", "tag");
+1. Add the following to a page called `hellos.html` and we'll get started:
 
-    var h1 = document.createElement("h1");
-    var namedH1 = document.createTextNode(nameVal);
-    h1.appendChild(namedH1);
-    helloDiv.appendChild(h1);
+   ```
+   <html>
+     <head>
+       <title>hello all</title>
+       <link rel="stylesheet" type="text/css" href="css/hello.css"/>
+       <script src="js/names.js"> </script>
+     </head>
+     <body> 
+       <form>
+         <label for="helloname">What Names?</label>
+         <input type="text" name="helloname" id="name" />
+         <input type="button" onclick="nameThem(this.form.helloname.value)" value="say hellos"/>
+       </form>
+       <div id="more_tags"></div>
+     </body>
+   </html>
+   ```
 
-    theNode.appendChild(helloDiv);
-  }
-  return true;
-}
+1. Now, open names.js and add the following shell of a function definition:
 
-```
+   ```
+   function nameThem(nameVals) {
+   }
+   ```
+
+   **Huh?** Stick with me, we're going to do tests and code along with each 
+   other this time. The reality is, the longer you take to write tests after 
+   you have written code, the crappier your tests will be. The crappiest test 
+   is the one that's never written. 
+
+   In this case, we can do Test Driven Development because we're expanding on 
+   something we already know. When you're learning something, you have to poke 
+   at it a bit before you even understand how to code it, let alone, how to 
+   accurately assert if it's working.
+
+1. Open names_spec.js. Before we dive into the test code, what do we know? 
+   Well, we know we want to:
+
+   * create a nametag for each name added in the text box
+   * names will be separated with commas ","
+   * we want to append to our `more_tags` div each time we're called
+
+   Let's add a new `describe` since we're describing a slightly different 
+   context:
+
+   ```
+    describe("multinames", function() {
+    });
+   ```
+   We can write those tests, but, first, let's get the DOM set right in our 
+   `beforeEach` and `afterEach` methods. For nameThem to work on our page, 
+   we are going to need a `more_tags` div.
+
+   ```
+    beforeEach(function() {
+      var testNode = document.createElement("div");
+      testNode.setAttribute("id","more_tags");
+      document.body.appendChild(testNode);
+    });
+   ```
+   
+   There. We'll just create a `more_tags` node for this context. These methods
+   will be run before and after each test WITHIN this describe context. 
+
+1. Let's clean up after ourselves too. 
+
+   ```
+    afterEach(function() {
+      var toDel = document.getElementById("more_tags");
+      toDel.parentElement.removeChild(toDel);
+    });
+   ```
+
+1. Let's add our first test. The easiest thing we know is that we want to 
+   be able to handle multiple names and we will separate those names with 
+   commas. We plan to write those new children to our `more_tags` div, so 
+   the easiest test will be to see how many children that div has:
+
+   ```
+    it("should create 2 children under more_tags when 2 names are passed in", function() {
+      var testVal = "foo,bar";
+      nameThem(testVal);
+      expect(document.getElementById("more_tags").childNodes.length).toEqual(2);
+    });
+   ```
+
+   Calling `childNodes` on the `more_tags` node will give us a list of all 
+   children and we can test its length. Since we haven't written our 
+   implementation, yet, our test fails:
+
+   ![first failing advanced test](doc/hello-jasmine-tdd-first-failing.png)
+
+1. Let's create enough implementation to pass:
+   ```
+   function nameThem(nameVals) {
+     var names = nameVals.split(',');
+     var theNode = document.getElementById("more_tags");
+     for ( var count = 0; count < names.length; count++ ) {
+       var helloDiv = document.createElement("div");
+       theNode.appendChild(helloDiv);
+     }
+     return true;
+   }
+   ```
+
+   Not fully functional, yet, but it will create child nodes.
+
+1. Let's test that it will not create multiple nodes when we pass in one name 
+   and will not mistake names with spaces as two names.
+
+   ```
+    it("should create 1 child under more_tags when 1 name is passed in", function() {
+      var testVal = "foo";
+      nameThem(testVal);
+      expect(document.getElementById("more_tags").childNodes.length).toEqual(1);
+    });
+   ```
+
+   ![more advanced tests](doc/hello-jasmine-tdd-second-passing.png)
+
+1. Let's test that it will not create multiple nodes when we pass in one name 
+   that has a space in it.
+
+   ```
+    it("should create 1 child under more_tags when 1 name with spaces is passed in", function() {
+      var testVal = "Billy Jo";
+      nameThem(testVal);
+      expect(document.getElementById("more_tags").childNodes.length).toEqual(1);
+    });
+   ```
+
+   ![more advanced tests](doc/hello-jasmine-tdd-third-passing.png)
+
+1. Hmm... what happens if we pass in an empty string? This will happen if someone
+   hits the "say hello" button before they enter anything. Let's make sure we don't
+   create empty nametags
+
+   ```
+    it("should create 0 children under more_tags when an empty string is passed in", function() {
+      var testVal = "";
+      nameThem(testVal);
+      expect(document.getElementById("more_tags").childNodes.length).toEqual(0);
+    });
+   ```
+
+   ![more advanced tests failing](doc/hello-jasmine-tdd-fourth-failing.png)
+
+1. Failed! Let's fix that by testing for empty string before doing anything:
+   
+   ```
+    function nameThem(nameVals) {
+      if ( nameVals != "" ) {
+        var names = nameVals.split(',');
+        var theNode = document.getElementById("more_tags");
+        for ( var count = 0; count < names.length; count++ ) {
+          var helloDiv = document.createElement("div");
+          theNode.appendChild(helloDiv);
+        }
+      }
+      return true;
+    }
+   ```
+
+   ![more advanced tests passing](doc/hello-jasmine-tdd-fourth-passing.png)
+
+1. Now that we're handling many of the name-to-div cases, we should make sure 
+   we create divs that look like we want them to look. Since we know what this 
+   code would look like in the DOM, we can test for it. 
+
+   ```
+    it("should create children under more_tags with the right style", function() {
+      var testName = "foo";
+      var expectedClass = "tag";
+      nameThem(testName);
+      expect(document.getElementById("more_tags").firstChild.getAttribute("class")).toEqual(expectedClass);
+    });
+   ```
+
+   Since we create these child nodes in a loop and they should be basically 
+   templates of each other, it should be fairly safe to just test the first one.
+   If you wanted to be overly cautious, you could copy all of the above tests
+   and make sure that nodes are created with the right CSS class in every case.
+
+   Now... something can happen to prove me wrong, but this should do for now:
+
+   ![tdd checking style](doc/hello-jasmine-tdd-style-failing.png)
+
+1. Let's add style to our nodes and see if the test will pass:
+   ```
+    function nameThem(nameVals) {
+      if ( nameVals != "" ) {
+        var names = nameVals.split(',');
+        var theNode = document.getElementById("more_tags");
+        for ( var count = 0; count < names.length; count++ ) {
+          var helloDiv = document.createElement("div");
+          helloDiv.setAttribute("class", "tag");
+          theNode.appendChild(helloDiv);
+        }
+      }
+      return true;
+    }
+   ```
+   
+   ![tdd passing style](doc/hello-jasmine-tdd-style-passing.png)
+
+1. Awesome! Let's try out `hellos.html` in the browser and see how friggin 
+   fabulous this is:
+
+   ![still not quite right](doc/hello-jasmine-multi-missing-names.png)
+
+   **WAT???** Oops, we forgot to add our names! 
+
+1. Let's add a test that makes sure we add a name in a tag with the name as its
+   content. This can be like our style test as we will either get them all 
+   wrong or all right:
+   ```
+    it("should create children under more_tags's children with the name in there", function() {
+      var testName = "foo";
+      nameThem(testName);
+      expect(document.getElementById("more_tags").firstChild.firstChild.textContent).toEqual(testName);
+    });
+   ```
+
+   ![the names test fails as expected](doc/hello-jasmine-tdd-names-failing.png)
+
+1. We could write a better test than that, but it'll do for now, I don't want 
+   to crush you under any more details. Let's make that test pass:
+
+   ```
+   function nameThem(nameVals) {
+     if ( nameVals != "" ) {
+       var names = nameVals.split(',');
+       var theNode = document.getElementById("more_tags");
+       for ( var count = 0; count < names.length; count++ ) {
+         var nameVal = names[count].trim();
+         var h1 = document.createElement("h1");
+         var namedH1 = document.createTextNode(nameVal);
+         h1.appendChild(namedH1);
+   
+         var helloDiv = document.createElement("div");
+         helloDiv.setAttribute("class", "tag");
+         helloDiv.appendChild(h1);
+   
+         theNode.appendChild(helloDiv);
+       }
+     }
+     return true;
+   }
+   ```
+
+   ![the names test passes!!!](doc/hello-jasmine-tdd-names-passing.png)
+
+1. Back to our html page, let's try hellos.html in the browser:
+   
+   ![lots'o nametags](doc/hello-jasmine-tdd-multi-rewards.png)
+
+
+
+
+
