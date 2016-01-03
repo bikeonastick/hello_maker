@@ -386,7 +386,7 @@ want to test our HTML page (a functional test) you can use
 selenium tests, but you need a lot of external dependencies to execute that
 I chose not to show you that, here. 
 
-What I want you to understand is that _tests are important_ and not very
+What I want you to understand is that **tests are important** and not very
 difficult to add to your project, so keep following this!
 
 1. If you've brought this down locally using git, you've had a 
@@ -431,10 +431,185 @@ difficult to add to your project, so keep following this!
     </html>
    ```
    
-   We are going to test our js/names.js javascript file 
+   We are going to test our js/names.js javascript file you need to add a
+   reference to it that is relative to SpecRunner.html. As well, you need a 
+   reference to your test file. I'm going to have you create names_spec.js 
+   in a subdirectory called spec, so add that now. 
 
+1. Now, let's create the test file. Create `test/jasmine/spec/names_spec.js` and 
+   open it in a text editor. Then, paste in the following code:
 
+   ```
+   describe("names", function() {
+     var testNode;
+     var song;
+   
+     beforeEach(function() {
+       testNode = document.createElement("div");
+       testNode.setAttribute("id","nametag_text");
+       document.body.appendChild(testNode);
+     });
+     afterEach(function() {
+       var toDel = document.getElementById("nametag_text");
+       toDel.parentElement.removeChild(toDel);
+     });
+   
+     it("should set the `nametag_text` node's content", function() {
+       var testVal = "foo";
+       nameIt(testVal);
+       expect(document.getElementById("nametag_text").textContent).toEqual(testVal);
+     });
+   
+   });
+   ```
 
+   **wait what?**
 
+   I know that's a lot of code and I will explain some of it in a moment. First,
+   let's see your test run!
+
+1. Open SpecRunner.html in your browser. If everything is set up right, the test
+   should pass and you should see something like this:
+
+   ![whoooop, whooooop, passing tests!](doc/hello-passing-jasmine.png)
+
+1. Now, just to make sure our test is doing something, let's make it fail. One
+   way would be to change what the test is looking for, but, instead, I'm going 
+   to recommend you break the JavaScript. 
+
+   Open names.js in a text editor and change the DOM id that the nameIt function
+   is looking for:
+
+   Passing
+
+   ```
+   function nameIt(nameVal) {
+     var theNode = document.getElementById("nametag_text");
+     theNode.textContent = nameVal;
+   
+     return true;
+   }
+   ```
+
+   Failing
+   ```
+   function nameIt(nameVal) {
+     var theNode = document.getElementById("xnametag_text");
+     theNode.textContent = nameVal;
+   
+     return true;
+   }
+   ```
+
+   Subtle change, I'm sure, but I changed nametag_text to **xnametag_text** so
+   now the test fails
+
+   ![boooo, failing test!](doc/hello-failing-jasmine.png)
+
+### Picking apart the test code
+
+This syntax is Jasmine, which is a JavaScript DSL (Domain Specific Language) 
+for writing unit tests. (I know, they claim to be BDD, but most people really 
+write unit tests despite claiming to be testing behavior with this tool. Any 
+time you test in isolation, you are testing a unit, even if you can describe the 
+intended behavior with rich, human-readable language, like we do in Jasmine. If 
+you want to do true BDD on browser-based projects, look into driving 
+[Selenium](http://www.seleniumhq.org/) with Jasmine, or use 
+[Mocha](https://mochajs.org/) with the excellent 
+[chai JavaScript assertions](http://chaijs.com/) to drive your browser through 
+Selenium. The deal is, if you're not testing it the way your user experiences it, 
+you're not testing behavior.) 
+
+Anyway, enough controversial topics for the day. Let's deconstruct the Jasmine 
+code so you can benefit from what we've done here.
+
+While this is the Jasmine DSL, the general concepts will apply to most 
+unit testing frameworks.
+
+On the first line we call a jasmine function named `describe` and we pass a 
+string and a function to it. The string shows up in our test output
+
+```
+describe("names", function() {
+```
+
+![names](doc/hello-jasmine-display-names.png)
+
+The function encapsulates all of the rest of the code for the test. 
+
+Before we get to the actual test, let's get the housekeeping steps covered. 
+Notice there are two methods being called: `beforeEach` and `afterEach`. Most 
+unit testing frameworks have methods the will run to set up and tear down for 
+each of the tests in their scope. That's what these do.
+
+In my implementation, I am creating the DOM elements that my nameIt function 
+interacts with when it is added to an html page in the `beforeEach` method. 
+This way, when it tests my method, all the right pieces will be in place:
+
+```
+  beforeEach(function() {
+    testNode = document.createElement("div");
+    testNode.setAttribute("id","nametag_text");
+    document.body.appendChild(testNode);
+  });
+
+```
+
+If you are running multiple tests, you also want to clean up after yourself 
+before running a new test or else you cannot really trust the results. Some 
+engineers will try to write progressive tests that build upon the results of 
+previous tests. These can be very brittle and hard to maintain. Some purists 
+will tell you that you're doing it wrong if you do it that way. I will say that
+I try to avoid doing that, but people have their reasons, sometimes it's for
+performance (setup and teardown can take a lot of time), and sometimes it's 
+because they're black-box testing and cannot change the code, but, in reality 
+sometimes it's for misguided reasons. Heck... there are worse sins than 
+testing, such as, NOT TESTING!
+
+Oh yeah, I digress... I'm using `afterEach` to wipe out the div I create in 
+`beforeEach`, so the DOM will be clean for the next test I write:
+
+```
+  afterEach(function() {
+    var toDel = document.getElementById("nametag_text");
+    toDel.parentElement.removeChild(toDel);
+  });
+```
+
+Now on to the actual test.
+
+```
+  it("should set the `nametag_text` node's content", function() {
+    var testVal = "foo";
+    nameIt(testVal);
+    expect(document.getElementById("nametag_text").textContent).toEqual(testVal);
+  });
+```
+
+We call the `it` method. Yeah... `it`. Seems weird, but stick with me. Remember,
+we are in a `describe` method for something we called "names" and we are going 
+to call `it` and supply that with a descriptive phrase. Try to read it all as a
+sentence. Describe "names" it "should set the nametag_text node's econtent".
+See? Then in that test (encapsulated in a JavaScript function) we set the 
+variable `testVal`, pass it to our nameIt function as an argument then we 
+describe our expectation:
+
+```
+    expect(document.getElementById("nametag_text").textContent).toEqual(testVal);
+```
+
+We, expect the "nametag_text" node's text to equal the value we passed into our 
+nameIt function. That string we pass into the `it` method as our first argument 
+is displayed in the test results page in your browser:
+
+![names](doc/hello-jasmine-display-should.png)
+
+So, you should be able to find your results, easily. As well, if you do a nice 
+job of writing accurate and descriptive messages, you can share these results 
+with non-technical (or slightly-less-technical) people who are involved with 
+your project. They can look at your tests and understand the behavior you have 
+described. Some people would say the behavior of your code, but, in reality, if
+you write poor or inaccurate descriptions, they won't know what it's really 
+doing. 
 
 
