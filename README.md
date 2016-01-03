@@ -740,7 +740,17 @@ intent, as well.
    }
    ```
 
-   Not fully functional, yet, but it will create child nodes.
+   Not fully functional, yet, but it will create child nodes. To point out what
+   we're doing here, look at the first line of the function, I am calling a 
+   function called `split` on the nameVals argument. What that does, when fed
+   with an argument, is to break a string on whatever the character is in the
+   argument. In this case, it will split any string on commas. The returning
+   value from that is an array of values. 
+
+   You should do some research on [JavaScript arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array). I will use a for loop to 
+   walk through each element of the array until we reach the end of the array.
+
+   While you're at it, you should look at [JavaScript for loops](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for)
 
 1. Let's test that it will not create multiple nodes when we pass in one name 
    and will not mistake names with spaces as two names.
@@ -884,6 +894,12 @@ intent, as well.
      return true;
    }
    ```
+
+   Back to our array. Look at the first line within the for loop. I have used
+   the `count` variable created in the `for` loop to reference a specific 
+   element in the `names` array. We will execute this loop for each element
+   in the names array and pick that value out of the array using the `count` 
+   variable, which is being incremented by the for loop.
 
    ![the names test passes!!!](doc/hello-jasmine-tdd-names-passing.png)
 
