@@ -342,6 +342,32 @@ with CSS.
 
 ## Step 8 - Testing your JavaScript
 
+Ahh, testing. This is super important when a project lives over a long
+period of time. It's extremely easy to forget what behavior you meant to 
+implement, the last time you were in the code, when you're working on a
+project by yourself. It's even _more_ difficult if you are working on a project
+with someone else. Sharing code can be difficult, so it's a good idea to 
+have executable definitions of what you belive properly functioning code is.
+
+To do this, you should add tests. There are a ton of different ways you can
+add tests. I'm going to walk you through one way of doing it: 
+[Jasmine](http://jasmine.github.io/). Jasmine was simple to add here, 
+because we'll include the jasmine code right in this project, make a small 
+test file, and run that file by opening it in the browser. It will just test
+the javascript we execute in the test. This is a unit test. If, instead, we 
+want to test our HTML page (a functional test) you can use 
+[Selenium](http://www.seleniumhq.org/). There are multiple ways to execute
+selenium tests, but you need a lot of external dependencies to execute that
+I chose not to show you that, here. 
+
+What I want you to understand is that _tests are important_ and not very
+difficult to add to your project, so keep following this!
+
+1. If you've brought this down locally using git, you've had a 
+   directory named `test` in your source tree the whole time. Now wer're going
+   to use it. I have included a copy of Jasmine's source. If you are starting
+   a new project, download a new copy.
+
 
 
 
