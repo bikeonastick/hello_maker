@@ -455,10 +455,8 @@ difficult to add to your project, so keep following this!
 
    ```
    describe("names", function() {
-     var testNode;
-     var song;
-   
      beforeEach(function() {
+       var testNode;
        testNode = document.createElement("div");
        testNode.setAttribute("id","nametag_text");
        document.body.appendChild(testNode);
