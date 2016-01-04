@@ -56,7 +56,7 @@ describe("multinames", function() {
     nameThem(testVal1);
     expect(document.getElementById("more_tags").childNodes.length).toEqual(2);
   });
-/*
+
   it("should create 0 children under more_tags when an empty string is passed in", function() {
     var testVal = "";
     nameThem(testVal);
@@ -75,5 +75,5 @@ describe("multinames", function() {
     nameThem(testName);
     expect(document.getElementById("more_tags").firstChild.firstChild.textContent).toEqual(testName);
   });
-*/
+
 });
