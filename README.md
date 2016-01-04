@@ -10,6 +10,7 @@ I will try to explain as much as I can along the way. There may be some
 concepts that you'll just have to take as further research points from this 
 experience. This is really just a primer. 
 
+
 # Structure
 
 We will, eventually, divide up the code by directories, so we have HTML in this
@@ -21,12 +22,13 @@ directory, Javascript in its own `js` directory, Cascading Style Sheets in a
 -README.md
 -hello.html
 -hellos.html
--js/
-  |-names.js
 -css/
   |-hello.css
+-doc/ # images for this README to reference
 -images/
   |-hello_my_name_is.png
+-js/
+  |-names.js
 -test/
   |-jasmine/
      |-SpecRunner.html
@@ -36,10 +38,17 @@ directory, Javascript in its own `js` directory, Cascading Style Sheets in a
 
 # Method
 
-If you would like, you can check out this repository. It will come down in 
-its completed form. You can wind back the source for each step by checking out 
+In a perfect world, you would [install git](https://help.github.com/articles/set-up-git/) 
+on your computer and clone this repository.
+
+If you would like, you can clone this repository. It will come down in 
+its completed form. 
+
+***not implemented yet***
+You can wind back the source for each step by checking out 
 the tags related to each step. Checking out step0 will have you ready to start
-step1.
+step 1 and checking out step1 will have you ready to start step 2.
+***end not implemented yet***
 
 # The Tutorial
 
