@@ -11,7 +11,7 @@ describe("names", function() {
     toDel.parentElement.removeChild(toDel);
   });
 
-  it("should set the `nametag_text` node's content", function() {
+  it("should set the 'nametag_text' node's content", function() {
     var testVal = "foo";
     nameIt(testVal);
     expect(document.getElementById("nametag_text").textContent).toEqual(testVal);
@@ -49,6 +49,14 @@ describe("multinames", function() {
     expect(document.getElementById("more_tags").childNodes.length).toEqual(1);
   });
 
+  it("should append to more_tags when called more than once", function() {
+    var testVal0 = "foo";
+    var testVal1 = "bar";
+    nameThem(testVal0);
+    nameThem(testVal1);
+    expect(document.getElementById("more_tags").childNodes.length).toEqual(2);
+  });
+/*
   it("should create 0 children under more_tags when an empty string is passed in", function() {
     var testVal = "";
     nameThem(testVal);
@@ -67,5 +75,5 @@ describe("multinames", function() {
     nameThem(testName);
     expect(document.getElementById("more_tags").firstChild.firstChild.textContent).toEqual(testName);
   });
-
+*/
 });

@@ -466,7 +466,7 @@ difficult to add to your project, so keep following this!
        toDel.parentElement.removeChild(toDel);
      });
    
-     it("should set the `nametag_text` node's content", function() {
+     it("should set the 'nametag_text' node's content", function() {
        var testVal = "foo";
        nameIt(testVal);
        expect(document.getElementById("nametag_text").textContent).toEqual(testVal);
@@ -477,7 +477,7 @@ difficult to add to your project, so keep following this!
 
    **wait what?**
 
-   I know that's a lot of code and I will explain some of it in a moment. First,
+   I know that's a lot of code, and I will explain some of it in a moment. First,
    let's see your test run!
 
 1. Open SpecRunner.html in your browser. If everything is set up right, the test
@@ -533,7 +533,7 @@ Selenium. The deal is, if you're not testing it the way your user experiences it
 you're not testing behavior.) I'm not just picking on BDD here, it's really just
 funny how people will latch on to a name for something even if they aren't doing
 it. Some people use well-known unit testing frameworks to drive behavioral or 
-integration tests and they call them unit tests, despite needing a huge 
+integration tests, and they call them unit tests, despite needing a huge 
 dependency chain configured and running just to support the tests. 
 
 The point is, you are testing what you are testing, and testing is a good thing, 
@@ -583,9 +583,9 @@ previous tests. These can be very brittle and hard to maintain. Some purists
 will tell you that you're doing it wrong if you do it that way. I will say that
 I try to avoid doing that, but people have their reasons, sometimes it's for
 performance (setup and teardown can take a lot of time), and sometimes it's 
-because they're black-box testing and cannot change the code, but, in reality 
-sometimes it's for misguided reasons. Heck... there are worse sins than 
-testing, such as, NOT TESTING!
+because they're black-box testing and cannot change the code, but, in reality, 
+sometimes it's for misguided reasons. However, I won't judge, heck... there are 
+worse sins than testing, such as, NOT TESTING!
 
 Oh yeah, I digress... I'm using `afterEach` to wipe out the div I create in 
 `beforeEach`, so the DOM will be clean for the next test I write:
@@ -600,7 +600,7 @@ Oh yeah, I digress... I'm using `afterEach` to wipe out the div I create in
 Now on to the actual test.
 
 ```
-  it("should set the `nametag_text` node's content", function() {
+  it("should set the 'nametag_text' node's content", function() {
     var testVal = "foo";
     nameIt(testVal);
     expect(document.getElementById("nametag_text").textContent).toEqual(testVal);
@@ -629,13 +629,13 @@ So, you should be able to find your results, easily. As well, if you do a nice
 job of writing accurate and descriptive messages, you can share these results 
 with non-technical (or slightly-less-technical) people who are involved with 
 your project. They can look at your tests and understand the behavior you have 
-described. Some people would say the behavior of your code, but, in reality, if
+described. Some people would say "the behavior" of your code, but, in reality, if
 you write poor or inaccurate descriptions, they won't know what it's really 
 doing. 
 
 ## Step 9 - Getting more complex
 
-Let's look at how we could write multiple nametags. We'll use the same form and
+Let's look at how we could write multiple nametags. We'll use the same form, and
 if you enter multiple names separated by commas, we'll create a nametag for each
 one. 
 
@@ -789,6 +789,33 @@ intent, as well.
    ```
 
    ![more advanced tests](doc/hello-jasmine-tdd-third-passing.png)
+
+1. Do you remember that we said we want the code to append if you keep using the 
+   page? Let's make sure it does that and describe it in a test. Without this, the
+   next developer could easily come in and see this behavior as a bug, writing 
+   code to wipe out the `more_tags` div before it manipulates the DOM each time.
+
+   ```
+     it("should append to more_tags when called more than once", function() {
+       var testVal0 = "foo";
+       var testVal1 = "bar";
+       nameThem(testVal0);
+       nameThem(testVal1);
+       expect(document.getElementById("more_tags").childNodes.length).toEqual(2);
+     });
+   ```
+
+   ![testing appending](doc/hello-jasmine-tdd-appending-passing.png)
+   
+   Ooh, yeah, it works!
+
+   This is one of those cases where either type of functionality could be valid, 
+   and, therefore, the other behavior could be deemed a bug based on the context
+   a developer brings to the table. 
+
+   It's best to call out this behavior, clearly, as intended, so people don't 
+   waste their time "fixing" it in the future. (Unless customers and Product 
+   Managers want the behavior, changed.)
 
 1. Hmm... what happens if we pass in an empty string? This will happen if someone
    hits the "say hello" button before they enter anything. Let's make sure we don't
