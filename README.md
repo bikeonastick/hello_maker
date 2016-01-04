@@ -50,6 +50,11 @@ the tags related to each step. Checking out step0 will have you ready to start
 step 1 and checking out step1 will have you ready to start step 2.
 ***end not implemented yet***
 
+_As of right now, when you check this out, there is only one branch, master, and
+it has no tags. Rolling back commits will not necessarily walk you through the 
+tutorial and the README.md changes with each commit._ 
+
+
 # The Tutorial
 
 Each general step will have its own heading. 
