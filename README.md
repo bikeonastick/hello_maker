@@ -45,9 +45,11 @@ If you would like, you can clone this repository. It will come down in
 its completed form. 
 
 ***not implemented yet***
+
 You can wind back the source for each step by checking out 
 the tags related to each step. Checking out step0 will have you ready to start
 step 1 and checking out step1 will have you ready to start step 2.
+
 ***end not implemented yet***
 
 _As of right now, when you check this out, there is only one branch, master, and
@@ -61,7 +63,7 @@ Each general step will have its own heading.
 
 ## Step 1 - Adding our Image
 
-Images are normally specifiec using an img tag, e.g.,
+Images are normally specified using an img tag, e.g.,
 
 ```
 <img src="images/hello_my_name_is.png" />
@@ -69,14 +71,10 @@ Images are normally specifiec using an img tag, e.g.,
 
 *Note*: the image used here came from [wikimedia commons](https://commons.wikimedia.org/wiki/File:Hello_my_name_is_sticker.svg)
 
-However, we eventually want to write on the image and since the JavaScript we
-will be writing manipulates the HTML and not the actual image, we are going to
-use a trick of layering HTML on top of the image so it looks as one. The best
-way to do that is to make the image the background of a block section of the
-HTML page. A `div` tag is the best way to do this. We will style that div tag
-with CSS.
+First, let's display the image.
 
-1. Open hello.html in a text editor:
+1. If you cloned this repo, rename hello.html `mv hello.html hello_orig.html`
+1. Open a new hello.html in a text editor and add the following html:
 
    ```
    <html>
@@ -89,14 +87,24 @@ with CSS.
    </html>
    ```
 
+1. Check it out in a browser
+
    ![basic image reference](doc/hello1.png)
+
 
 ## Step 2 - Making our image writeable.
 
-1. We want to, eventually, programmatically write on the image, so to do that
-   we will need to layer on top of it. The best way to do so is to make it a
-   background image. We're going to do that with CSS. Add a style attribute to the
-   head. As well, create a div in the body and give it the class of `tag`
+However, we eventually want to write on the image. Since the JavaScript we
+will be writing manipulates the HTML and not the actual image, we are going to
+use a trick of layering HTML on top of the image so it looks as one. The best
+way to do that is to make the image the background of a block section of the
+HTML page. A `div` tag is the best way to do this. We will style that div tag
+with CSS.
+
+1. Let's make the image a background image, so we can layer HTML on top of it. 
+   We're going to do that with CSS. Add a style attribute to the head. As well, 
+   create a div in the body and give it the class of `tag`
+
    ```
    <html>
     <head>
@@ -134,6 +142,7 @@ with CSS.
 1. We want the page to be interactive, and want the user to be able to input some
    data with which our page can interact. The best way to do that is with a form. 
    Let's add a form to the page just beneath the body tag:
+
    ```
    <body>
      <form>
@@ -170,13 +179,11 @@ with CSS.
       }
     </script>
    ```
-
    We have written a JavaScript function that takes one argument (arguments
    are passed in the parentheses). Arguments are how you pass information (or context)
    from where the user action occurs to where you are going to use it. Inside the 
    function, you use the argument by name to reference it. Notice, now we 
    alert `nameVal` instead of the form
-
 
 1. To enable this, change your form to call the new `nameIt` function you created
    ```
